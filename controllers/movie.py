@@ -47,6 +47,7 @@ def movie_delete_post(ID):
 @movie.route('/Movie/Create', methods=['GET', 'POST'])
 def movie_create():
     form = MovieForm()
+
     if form.validate_on_submit():
         new_movie = Movie(
             title=form.title.data,
@@ -58,25 +59,17 @@ def movie_create():
         db.session.add(new_movie)
         db.session.commit()
         return redirect(url_for('movie.movie_list'))
+    
     return render_template("movie_create.html", form=form)
 
-@movie.route('/Movie/Edit/<int:ID>', methods=['GET'])
+@movie.route('/Movie/Edit/<int:ID>', methods=['GET', 'POST'])
 def movie_edit(ID):
     movie = Movie.query.get_or_404(ID)
+    form = MovieForm(obj=movie)
 
-    return render_template("movie_edit.html", movie=movie)
+    if form.validate_on_submit():
+        form.populate_obj(movie)
+        db.session.commit()
+        return redirect(url_for('movie.movie_list'))
 
-@movie.route('/Movie/Edit/<int:ID>', methods=['POST'])
-def movie_edit_post(ID):
-    movie = Movie.query.get_or_404(ID)
-
-    # Update the movie details
-    movie.title = request.form['title']
-    movie.release_date = datetime.strptime(request.form['release_date'], '%Y-%m-%d').date()
-    movie.genre = request.form['genre']
-    movie.price = request.form['price']
-    movie.rating = request.form['rating']
-
-    db.session.commit()
-
-    return redirect(url_for('movie.movie_list', ID=ID))
+    return render_template("movie_edit.html", form=form, movie=movie)
