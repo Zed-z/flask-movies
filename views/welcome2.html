@@ -1,0 +1,12 @@
+{% extends "_layout.html" %}
+{% block title %}Welcome{% endblock %}
+{% block content %}
+	<p>Hello {{ name }}, NumTimes is: {{ numtimes }}</p>
+
+	<h1>Welcome</h1>
+	<ul>
+		{% for i in range(numtimes) %}
+			<li>Hello {{ name }}</li>
+		{% endfor %}
+	</ul>
+{% endblock %}

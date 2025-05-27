@@ -1,0 +1,36 @@
+{% extends "_layout.html" %}
+{% block title %}Create Movie{% endblock %}
+{% block content %}
+	<form method="post">
+
+		{{ form.hidden_tag() }}
+
+        {{ form.title.label }} {{ form.title(size=32) }}<br>
+        {% for error in form.title.errors %}
+            <div style="color: red;">{{ error }}</div>
+        {% endfor %}
+
+        {{ form.release_date.label }} {{ form.release_date() }}<br>
+        {% for error in form.release_date.errors %}
+            <div style="color: red;">{{ error }}</div>
+        {% endfor %}
+
+        {{ form.price.label }} {{ form.price() }}<br>
+        {% for error in form.price.errors %}
+            <div style="color: red;">{{ error }}</div>
+        {% endfor %}
+
+        {{ form.genre.label }} {{ form.genre(size=32) }}<br>
+        {% for error in form.genre.errors %}
+            <div style="color: red;">{{ error }}</div>
+        {% endfor %}
+
+        {{ form.rating.label }} {{ form.rating(size=10) }}<br>
+        {% for error in form.rating.errors %}
+            <div style="color: red;">{{ error }}</div>
+        {% endfor %}
+
+        <button type="submit">Create Movie</button>
+    </form>
+	<a href="{{ url_for('movie.movie_list') }}">Back to Movie List</a>
+{% endblock %}

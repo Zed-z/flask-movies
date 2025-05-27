@@ -1,0 +1,20 @@
+{% extends "_layout.html" %}
+{% block title %}{{ movie.title }}{% endblock %}
+{% block content %}
+	<form action="{{ url_for('movie.movie_edit_post', ID=movie.id) }}" method="post">
+		<input type="hidden" name="ID" value="{{ movie.id }}">
+
+		Title: <input type="text" name="title" value="{{ movie.title }}" placeholder="Title">
+		<br>
+		Release Date: <input type="date" name="release_date" value="{{ movie.release_date }}" placeholder="Release Date">
+		<br>
+		Genre: <input type="text" name="genre" value="{{ movie.genre }}" placeholder="Genre">
+		<br>
+		Price: <input type="text" name="price" value="{{ movie.price }}" placeholder="Price">
+		<br>
+		Rating: <input type="text" name="rating" value="{{ movie.rating }}" placeholder="Rating">
+		<br>
+		<button type="submit">Update Movie</button>
+	</form>
+	<a href="{{ url_for('movie.movie_list') }}">Back to Movie List</a>
+{% endblock %}

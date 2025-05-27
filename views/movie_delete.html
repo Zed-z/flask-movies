@@ -1,0 +1,11 @@
+{% extends "_layout.html" %}
+{% block title %}{{ movie.title }}{% endblock %}
+{% block content %}
+	<form action="{{ url_for('movie.movie_delete_post', ID=movie.id) }}" method="post">
+		Delete Movie: {{ movie.title }}?
+		<br>
+		<input type="hidden" name="ID" value="{{ movie.id }}">
+		<button type="submit">Delete Movie</button>
+	</form>
+	<a href="{{ url_for('movie.movie_list') }}">Back to Movie List</a>
+{% endblock %}
