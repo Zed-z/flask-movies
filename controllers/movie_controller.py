@@ -5,10 +5,10 @@ from models import db
 from models.movie import Movie
 from models.movie import MovieForm
 
-movie = Blueprint('movie', __name__)
+movie_controller = Blueprint('movie_controller', __name__)
 
-@movie.route('/Movie', methods=['GET'])
-def movie_list():
+@movie_controller.route('/Movie', methods=['GET'])
+def movie_index():
     movie_genre = request.args.get('MovieGenre', "", type=str)
     search_string = request.args.get('SearchString', "", type=str)
 
@@ -20,21 +20,21 @@ def movie_list():
 
     genres = [x[0] for x in Movie.query.with_entities(Movie.genre).distinct().all()]
 
-    return render_template("movie.html", movies=movies, genres=genres, movie_genre=movie_genre, search_string=search_string)
+    return render_template("movie/index.html", movies=movies, genres=genres, movie_genre=movie_genre, search_string=search_string)
 
-@movie.route('/Movie/Details/<int:ID>', methods=['GET'])
+@movie_controller.route('/Movie/Details/<int:ID>', methods=['GET'])
 def movie_details(ID):
     movie = Movie.query.get_or_404(ID)
 
-    return render_template("movie_details.html", movie=movie)
+    return render_template("movie/details.html", movie=movie)
 
-@movie.route('/Movie/Delete/<int:ID>', methods=['GET'])
+@movie_controller.route('/Movie/Delete/<int:ID>', methods=['GET'])
 def movie_delete(ID):
     movie = Movie.query.get_or_404(ID)
 
-    return render_template("movie_delete.html", movie=movie)
+    return render_template("movie/delete.html", movie=movie)
 
-@movie.route('/Movie/Delete/<int:ID>', methods=['POST'])
+@movie_controller.route('/Movie/Delete/<int:ID>', methods=['POST'])
 def movie_delete_post(ID):
     movie = Movie.query.get_or_404(ID)
 
@@ -42,9 +42,9 @@ def movie_delete_post(ID):
     db.session.delete(movie)
     db.session.commit()
 
-    return redirect(url_for('movie.movie_list'))
+    return redirect(url_for('movie_controller.movie_index'))
 
-@movie.route('/Movie/Create', methods=['GET', 'POST'])
+@movie_controller.route('/Movie/Create', methods=['GET', 'POST'])
 def movie_create():
     form = MovieForm()
 
@@ -58,11 +58,11 @@ def movie_create():
         )
         db.session.add(new_movie)
         db.session.commit()
-        return redirect(url_for('movie.movie_list'))
+        return redirect(url_for('movie_controller.movie_index'))
     
-    return render_template("movie_create.html", form=form)
+    return render_template("movie/create.html", form=form)
 
-@movie.route('/Movie/Edit/<int:ID>', methods=['GET', 'POST'])
+@movie_controller.route('/Movie/Edit/<int:ID>', methods=['GET', 'POST'])
 def movie_edit(ID):
     movie = Movie.query.get_or_404(ID)
     form = MovieForm(obj=movie)
@@ -70,6 +70,6 @@ def movie_edit(ID):
     if form.validate_on_submit():
         form.populate_obj(movie)
         db.session.commit()
-        return redirect(url_for('movie.movie_list'))
+        return redirect(url_for('movie_controller.movie_index'))
 
-    return render_template("movie_edit.html", form=form, movie=movie)
+    return render_template("movie/edit.html", form=form, movie=movie)

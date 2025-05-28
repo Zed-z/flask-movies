@@ -10,12 +10,12 @@ from models import db, seed
 db.init_app(app)
 
 # Controllers
-from controllers.index import index
-app.register_blueprint(index)
-from controllers.hello_world_controller import hello_world
-app.register_blueprint(hello_world)
-from controllers.movie import movie
-app.register_blueprint(movie)
+from controllers.index_controller import index_controller
+app.register_blueprint(index_controller)
+from controllers.hello_world_controller import hello_world_controller
+app.register_blueprint(hello_world_controller)
+from controllers.movie_controller import movie_controller
+app.register_blueprint(movie_controller)
 
 # Run app
 if __name__ == '__main__':

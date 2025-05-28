@@ -6,7 +6,7 @@
 	<p>Genre: {{ movie.genre }}</p>
 	<p>Price: ${{ movie.price }}</p>
 	<p>Rating: {{ movie.rating }}</p>
-	<a href="{{ url_for('movie.movie_edit', ID=movie.id) }}">Edit</a>
-	<a href="{{ url_for('movie.movie_delete', ID=movie.id) }}">Delete</a>
-	<a href="{{ url_for('movie.movie_list') }}">Back to Movie List</a>
+	<a href="{{ url_for('movie_controller.movie_edit', ID=movie.id) }}">Edit</a>
+	<a href="{{ url_for('movie_controller.movie_delete', ID=movie.id) }}">Delete</a>
+	<a href="{{ url_for('movie_controller.movie_index') }}">Back to Movie List</a>
 {% endblock %}

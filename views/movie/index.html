@@ -2,7 +2,7 @@
 {% block title %}My Movie List{% endblock %}
 {% block content %}
 	<h1>Movies:</h1>
-	<form method="get" action="{{ url_for('movie.movie_list') }}">
+	<form method="get" action="{{ url_for('movie_controller.movie_index') }}">
 		<input type="text" name="SearchString" value="{{ search_string }}" placeholder="Search by title" value="{{ search_query }}">
 		<select name="MovieGenre">
 			<option value="">All Genres</option>
@@ -11,7 +11,7 @@
 			{% endfor %}
 		</select>
 		<input type="submit" value="Search">
-		<a href="{{ url_for('movie.movie_list') }}">Reset</a>
+		<a href="{{ url_for('movie_controller.movie_index') }}">Reset</a>
 	</form>
 	<hr>
 	<table>
@@ -31,12 +31,12 @@
 				<td>${{ movie.price }}</td>
 				<td>{{ movie.rating }}</td>
 				<td>
-					<a href="{{ url_for('movie.movie_details', ID=movie.id) }}">Details</a>
-					<a href="{{ url_for('movie.movie_edit', ID=movie.id) }}">Edit</a>
-					<a href="{{ url_for('movie.movie_delete', ID=movie.id) }}">Delete</a>
+					<a href="{{ url_for('movie_controller.movie_details', ID=movie.id) }}">Details</a>
+					<a href="{{ url_for('movie_controller.movie_edit', ID=movie.id) }}">Edit</a>
+					<a href="{{ url_for('movie_controller.movie_delete', ID=movie.id) }}">Delete</a>
 				</td>
 			</tr>
 		{% endfor %}
 	</table>
-	<a href="{{ url_for('movie.movie_create') }}">Add New Movie</a>
+	<a href="{{ url_for('movie_controller.movie_create') }}">Add New Movie</a>
 {% endblock %}
